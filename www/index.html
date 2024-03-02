@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>God Family Hymnal</title>
+
+    <!-- Chinese_to_English_Hymnal_Finder references -->
+    <link href="css/gui.css" rel="stylesheet" />
+    <script type="text/javascript" src="scripts/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="scripts/datagfh.js"></script>
+    <script type="text/javascript" src="scripts/dataindex.js"></script>
+    <script type="text/javascript" src="scripts/dataBoundEdition.js"></script>
+    <script type="text/javascript" src="scripts/gui.js"></script>
+</head>
+<body>
+    <div class="app">
+        <div>
+            <div id="Output1" class="Content"></div>
+
+            <div id="Setting" style="visibility:hidden; width:100%">
+
+                <table style="visibility:hidden">
+                    <tr>
+                        <td><h2>Sort by</h2></td>
+                        <td><input type="radio" name="Lang" id="C_E" value="1" />C,E  </td>
+                        <td><input type="radio" name="Lang" id="E_C" value="2" />E,C</td>
+                        <td></td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td><h2>MP3 local</h2></td>
+                        <td><input type=radio name="Local" id="mp3SD" value="2" />OFF</td>
+                        <td><input type=radio name="Local" id="mp3NET" value="0" />ON</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input type=radio name="Local" id="mp3HD" value="1" />Local</td>
+                        <td><input type=radio name="Local" id="mp3SS" value="3" /></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><button id="info">Find GFH Folder</button></td>
+                        <td><input type=text id="folder" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="resultlist" style="visibility:hidden;"></div>
+            <div id="booklist" style="visibility:hidden"></div>
+            <div id="pagelist" style="visibility:hidden"></div>
+            <div id="TopMenu" style="position:fixed; background-color:deepskyblue; width:100%; top:-10px; left:0px">
+                <ul style="width:100%">
+                    <li><img id="menu-btn" class="BtnS" src="images/menu.png" /></li>
+                    <li><button id="BtBook" style="height:50px; font-size:large; text-align:center; background-color:transparent;">CH</button></li>
+                    <li><button id="BtPage" style="width:50px; height:50px; font-size:large; text-align:center; background-color:transparent;">1</button></li>
+                    <li><img id="btFind" class="BtnS" src="images/find.png" /></li>
+                    <li><audio controls="controls" id="AudioLeft" /></li>
+                </ul>
+            </div>
+            <div id="search" style="visibility:hidden">
+                <table>
+                    <tr>
+                        <td><img id="btnback" class="BtnS" src="images/back.png" /></td>
+                        <td>
+                            <input type=radio name="SearchBy" id="searchByTitle" value="0" />Title<br />
+                            <input type=radio name="SearchBy" id="searchByContent" value="1" checked />Content<br />
+                        </td>
+                        <td><input id="SearchText" type="text" /></td>
+                        <td><img id="btnsearch" class="BtnS" src="images/find.png" /></td>
+                        <td><h5 id="Count"></h5></td>
+                    </tr>
+                </table>
+            </div>
+            <!--<div id="OutTitle1"></div>-->
+            <button id="OutTitle2" style="position:fixed; bottom:5px; left:5px; height:40px; background-color:lightgray; font-size:smaller; text-align:center"></button>
+            <img id="btPDF" class="BtnS" style="position:fixed; width:50px; bottom:5px; right:150px; height:50px;" src="images/pdf.png" />
+            <img id="btBackPage" class="BtnS" style="position:fixed; width:50px; right:100px; bottom:5px; height:50px;" src="images/back.png" />
+            <img id="btAdd" class="BtnS" style="position:fixed; width:50px; right:50px; bottom:5px; height:50px;" src="images/add.png" />
+            <img id="btNextPage" class="BtnS" style="position:fixed; width:50px; right:0px; bottom:5px; height:50px;" src="images/forward.png" />
+
+            <div id="LowerMenu">
+            </div>
+
+
+        </div>
+
+        <div class="mobile-nav">
+            <div class="responsive-menu">
+                <ul>
+                    <li>
+                        <table>
+                            <tr>
+                                <td><input type="button" id="numOnly" style="width:48px; height:48px; margin:5px" /></td>
+                                <td><img id="btDisplay" class="BtnS" src="images/twopage.png" /></td>
+                                <td><img id="btHistory" class="BtnS" src="images/history.png" /></td>
+                                <td><img id="btBookmarks" class="BtnS" src="images/bookmarks.png" /></td>
+                                <td><img id="btMP3" class="BtnS" src="images/mp.png" /></td>
+                                <!--<td><img id="btSetting" class="BtnS" src="images/setting.png" /></td>-->
+                            </tr>
+                        </table>
+                    </li>
+                    <li id="book1"><button class="btli">神家詩歌</button></li>
+                    <li id="bookpdf"><button class="btli">神家詩歌 PDF</button></li>
+                </ul><br />
+                <table>
+                    <tr>
+                        <td><h2>Size</h2></td>
+                        <td style="width:calc(100% - 30px);"><input style="height:50px; zoom:0; " type="range" id="fontrange" name="rangeInput" min="5" max="60" onchange="updateTextInput(this.value);"></td>
+                        <td><h2><input type="text" id="fontSize" value="" style="width:50px" onchange="updateTextInput1(this.value);">pt</h2></td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td></td>
+                        <td><input type="checkbox" id="Night" value="1" />COLOR MODE<br /></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <h6>version 7.3.1</h6>
+            </div>
+        </div>
+    </div>
+
+    </body>
+</html>
